@@ -1,24 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
+import React  from 'react';
+import { useForm } from './hooks/useForm';
 import './App.css';
 
+interface FormState {
+  shop: string;
+  amount: number;
+  month: string;
+  type: string;
+}
+
 function App() {
+  const formState = {
+    shop: '',
+    amount: 0.00,
+    month: '',
+    type: '',
+  }
+  const { values, handleChange, handleSubmit } = useForm<FormState>(formState);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form className="form" onSubmit={handleSubmit}>
+        <label className="label">
+          Shop:
+          <input className="input" type="text" name="shop" onChange={handleChange} value={values.shop} />
+        </label>
+        <label className="label">
+          Amount:
+          <input className="input" type="text" name="amount" onChange={handleChange} value={values.amount} />
+        </label>
+        <label className="label">
+          Month:
+          <input className="input" type="text" name="month" onChange={handleChange} value={values.month} />
+        </label>
+        <label className="label">
+          Type:
+          <input className="input" type="text" name="type" onChange={handleChange} value={values.type} />
+        </label>
+        <input className="submit" type="submit" value="submit" />
+      </form>
     </div>
   );
 }
